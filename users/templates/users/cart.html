@@ -1,0 +1,52 @@
+{% extends 'layouts.html' %} 
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+<title>Ecommerce-Cart</title>
+{% endblock %}
+
+{% block main-content %}
+{% include 'users/header.html' %}
+
+<!--start of product section -->
+<div class="container my-4">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-10">
+            {% if items|length < 1 %}
+            <h2 class="text-center text-danger my-5">
+                No items in the Cart
+            </h2>
+            {% else %}
+             <h2 class="text-center my-4">
+                My Cart Items
+             </h2>
+             <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Unit price</th>
+                        <th>Product Image</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+               <tbody>
+                {% for i in items %}
+                <tr>
+                <td>{{i.product.product_name}}</td>
+                <td>{{i.product.product_price}}</td>
+                <td><img src="/{{i.product.product_image}}" alt="{{i.product.product_name}}" width="100"></td>
+                <td>
+                    <a href="/removecart/{{i.id}}" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this items from the cart')">Delete</a>
+                    &nbsp;
+                    <a href="#" class="btn btn-SUCCESS btn-sm">Order Now</a>
+                </td>
+            </tr>
+               {% endfor %}
+            </tboady>
+        </table>
+
+            {% endif %}
+
+<!-- end of product section-->
+{% include 'users/footer.html'%}
+{% endblock %}
